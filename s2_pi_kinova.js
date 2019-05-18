@@ -1,12 +1,12 @@
 class S2piKinova {
-    var socket = null;
+    socket = null;
 
-    var connected = false;
+    connected = false;
 
     // an array to hold possible digital input values for the reporter block
-    var digital_inputs = new Array(32);
-    var myStatus = 1; // initially yellow
-    var myMsg = 'not_ready';
+    digital_inputs = new Array(32);
+    myStatus = 1; // initially yellow
+    myMsg = 'not_ready';
     
     //Converted from https://jpcotekinova.github.io/s2_pi_kinova/s2_pi.js to Scratch 3.0 using Ext2to3!
     getInfo() {
@@ -170,7 +170,7 @@ class S2piKinova {
             this.digital_inputs.fill('0');
 
             // give the connection time establish
-            this.setTimeout(function() {
+            setTimeout(function() {
                 callback();
             }, 1000);
 
@@ -217,7 +217,7 @@ class S2piKinova {
 
         console.log("Begin ConnectToArm")
 
-        this.setTimeout(function() {
+        setTimeout(function() {
             callback();
         }, 2000);
 

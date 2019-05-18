@@ -1,4 +1,13 @@
 class S2piKinova {
+    var socket = null;
+
+    var connected = false;
+
+    // an array to hold possible digital input values for the reporter block
+    var digital_inputs = new Array(32);
+    var myStatus = 1; // initially yellow
+    var myMsg = 'not_ready';
+    
     //Converted from https://jpcotekinova.github.io/s2_pi_kinova/s2_pi.js to Scratch 3.0 using Ext2to3!
     getInfo() {
         return {
@@ -145,29 +154,29 @@ class S2piKinova {
     cnct({
         callback
     }) {
-        window.socket = new WebSocket("ws://127.0.0.1:9000");
-        window.socket.onopen = function() {
+        this.socket = new WebSocket("ws://127.0.0.1:9000");
+        this.socket.onopen = function() {
             var msg = JSON.stringify({
                 "command": "ready"
             });
-            window.socket.send(msg);
-            myStatus = 2;
+            this.socket.send(msg);
+            this.myStatus = 2;
 
             // change status light from yellow to green
-            myMsg = 'ready';
-            connected = true;
+            this.myMsg = 'ready';
+            this.connected = true;
 
             // initialize the reporter buffer
-            digital_inputs.fill('0');
+            this.digital_inputs.fill('0');
 
             // give the connection time establish
-            window.setTimeout(function() {
+            this.setTimeout(function() {
                 callback();
             }, 1000);
 
         };
 
-        window.socket.onmessage = function(message) {
+        this.socket.onmessage = function(message) {
             var msg = JSON.parse(message.data);
 
             // handle the only reporter message from the server
@@ -175,24 +184,24 @@ class S2piKinova {
             var reporter = msg['report'];
             if (reporter === 'digital_input_change') {
                 var pin = msg['pin'];
-                digital_inputs[parseInt(pin)] = msg['level']
+                this.digital_inputs[parseInt(pin)] = msg['level']
             }
             console.log(message.data)
         };
-        window.socket.onclose = function(e) {
+        this.socket.onclose = function(e) {
             console.log("Connection closed.");
             socket = null;
             connected = false;
-            myStatus = 1;
-            myMsg = 'not_ready'
+            this.myStatus = 1;
+            this.myMsg = 'not_ready'
         };
 
-        window.socket.onerror = function(e) {
+        this.socket.onerror = function(e) {
             console.log("Connection closed.");
             socket = null;
             connected = false;
-            myStatus = 1;
-            myMsg = 'not_ready'
+            this.myStatus = 1;
+            this.myMsg = 'not_ready'
             callback();
         };
     }
@@ -204,11 +213,11 @@ class S2piKinova {
         });
 
         console.log("Begin more ConnectToArm")
-        window.socket.send(msg);
+        this.socket.send(msg);
 
         console.log("Begin ConnectToArm")
 
-        window.setTimeout(function() {
+        this.setTimeout(function() {
             callback();
         }, 2000);
 
@@ -220,7 +229,7 @@ class S2piKinova {
         var msg = JSON.stringify({
             "command": "moveToPosition"
         });
-        window.socket.send(msg);
+        this.socket.send(msg);
 
         callback();
     }
@@ -244,7 +253,7 @@ class S2piKinova {
             'angle6': angle6
         });
         console.log(msg);
-        window.socket.send(msg);
+        this.socket.send(msg);
 
         callback();
     }
@@ -260,7 +269,7 @@ class S2piKinova {
                 "command": 'input',
                 'pin': pin
             });
-            window.socket.send(msg);
+            this.socket.send(msg);
         }
     }
     digital_write({
@@ -279,7 +288,7 @@ class S2piKinova {
                 'state': state
             });
             console.log(msg);
-            window.socket.send(msg);
+            this.socket.send(msg);
         }
     }
     analog_write({
@@ -306,7 +315,7 @@ class S2piKinova {
                         'value': value
                     });
                     console.log(msg);
-                    window.socket.send(msg);
+                    this.socket.send(msg);
                 }
             }
         }
@@ -335,7 +344,7 @@ class S2piKinova {
                         'value': value
                     });
                     console.log(msg);
-                    window.socket.send(msg);
+                    this.socket.send(msg);
                 }
             }
         }
@@ -355,7 +364,7 @@ class S2piKinova {
                 'frequency': frequency
             });
             console.log(msg);
-            window.socket.send(msg);
+            this.socket.send(msg);
         }
     }
     digital_read({
@@ -364,19 +373,19 @@ class S2piKinova {
         if (connected == false) {
             alert("Server Not Connected");
         } else {
-            return digital_inputs[parseInt(pin)]
+            return this.digital_inputs[parseInt(pin)]
 
         }
     }
     socket_state_read({
         state
     }) {
-        return window.socket.readyState
+        return this.socket.readyState
     }
     socket_buffered_amount({
         amount
     }) {
-        return window.socket.bufferedAmount
+        return this.socket.bufferedAmount
     }
     _formatMenu(menu) {
         const m = [];

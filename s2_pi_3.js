@@ -1,9 +1,9 @@
-class s2_pi {
+class s2_pi_kinova {
     //Converted from https://jpcotekinova.github.io/s2_pi_kinova/s2_pi.js to Scratch 3.0 using Ext2to3!
     getInfo() {
         return {
-            "id": "s2_pi",
-            "name": "s2_pi",
+            "id": "s2_pi_kinova",
+            "name": "s2_pi_kinova",
             "blocks": [{
                 "opcode": "cnct",
                 "blockType": "command",
@@ -379,4 +379,4 @@ class s2_pi {
         return m;
     }
 }
-Scratch.extensions.register(new s2_pi());
+Scratch.extensions.register(new s2_pi_kinova());

@@ -1,13 +1,18 @@
-class s2_pi_kinova {
+class S2piKinova {
     //Converted from https://jpcotekinova.github.io/s2_pi_kinova/s2_pi.js to Scratch 3.0 using Ext2to3!
     getInfo() {
         return {
-            "id": "s2_pi_kinova",
-            "name": "s2_pi_kinova",
+            "id": "S2piKinova",
+            "name": "S2piKinova",
             "blocks": [{
+                "opcode": "ncheck",
+                "blockType": "Boolean",
+                "text": "S2piKinova?",
+                "arguments": {}
+            },{
                 "opcode": "cnct",
                 "blockType": "command",
-                "text": "Connect to s2_pi server.",
+                "text": "Connect to S2piKinova server.",
                 "arguments": {}
             }, {
                 "opcode": "connectToArm",
@@ -131,6 +136,11 @@ class s2_pi_kinova {
                 high_low: this._formatMenu(['0', '1']),
             }
         };
+    }
+    ncheck({
+        check
+    }) {
+        return true
     }
     cnct({
         callback
@@ -379,4 +389,4 @@ class s2_pi_kinova {
         return m;
     }
 }
-Scratch.extensions.register(new s2_pi_kinova());
+Scratch.extensions.register(new S2piKinova());

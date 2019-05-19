@@ -29,14 +29,14 @@ class S2piKinova {
                 "text": "Connect to Jaco2 Arm.",
                 "arguments": {}
             }, {
-                "opcode": "moveToPosition",
+                "opcode": "moveToHome",
                 "blockType": "command",
-                "text": "MoveToPosition",
+                "text": "MoveToHome",
                 "arguments": {}
             }, {
-                "opcode": "moveToPosition2",
+                "opcode": "moveToPosition",
                 "blockType": "command",
-                "text": "MoveToPosition2- Angle1: %n, Angle2: %n, Angle3: %n, Angle4: %n, Angle5: %n, Angle6: [angle1]",
+                "text": "MoveToPosition2- Angle1: [angle1], Angle2: [angle12], Angle3: [angle3], Angle4: [angle4], Angle5: [angle5], Angle6: [angle6]",
                 "arguments": {
                     "angle1": {
                         "type": "number",
@@ -223,17 +223,17 @@ class S2piKinova {
 
         console.log("After ConnectToArm")
     }
-    moveToPosition({
+    moveToHome({
         callback
     }) {
         var msg = JSON.stringify({
-            "command": "moveToPosition"
+            "command": "moveToHome"
         });
         this.socket.send(msg);
 
         callback();
     }
-    moveToPosition2({
+    moveToPosition({
         angle1,
         angle2,
         angle3,
@@ -242,9 +242,9 @@ class S2piKinova {
         angle6,
         callback
     }) {
-        console.log("moveToPosition2");
+        console.log("moveToPosition");
         var msg = JSON.stringify({
-            "command": 'moveToPosition2',
+            "command": 'moveToPosition',
             'angle1': angle1,
             'angle2': angle2,
             'angle3': angle3,

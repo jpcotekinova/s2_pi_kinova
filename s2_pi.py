@@ -74,11 +74,11 @@ class S2Pi(WebSocket):
             print('callback', payload)
             msg = json.dumps(payload)
             self.sendMessage(msg)
+        elif client_cmd == 'moveToHome':
+            print('moveToHome command initiated')
+            PyJaco2API.API_sendAdvanceTraj(readyPoint)   
         elif client_cmd == 'moveToPosition':
             print('moveToPosition command initiated')
-            PyJaco2API.API_sendAdvanceTraj(readyPoint)   
-        elif client_cmd == 'moveToPosition2':
-            print('moveToPosition2 command initiated')
             
             destPoint.Position.HandMode = PyJaco2API.HAND_MODE.HAND_NOMOVEMENT
             destPoint.Position.Type = PyJaco2API.POSITION_TYPE.ANGULAR_POSITION
